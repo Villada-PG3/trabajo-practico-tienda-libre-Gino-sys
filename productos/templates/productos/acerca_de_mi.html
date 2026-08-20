@@ -1,17 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Acerca de mí</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>Acerca de mí</h1>
+{% block title %}Acerca de mí{% endblock %}
 
-    <p>Hola, soy Gino.</p>
+{% block content %}
 
-    <p>Estoy aprendiendo Django y desarrollando una tienda online como proyecto.</p>
+<div class="container py-5">
 
-    <a href="/">Volver al inicio</a>
+    <div class="card shadow mx-auto" style="max-width: 700px;">
 
-</body>
-</html>
+        <div class="card-body text-center p-5">
+
+            <h1 class="mb-4">
+                👋 Acerca de mí
+            </h1>
+
+            <p class="lead">
+                Hola, soy Gino.
+            </p>
+
+            <p>
+                Estoy aprendiendo Django y desarrollando una tienda online
+                como proyecto.
+            </p>
+
+            <a href="/" class="btn btn-primary mt-3">
+                Volver al inicio
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

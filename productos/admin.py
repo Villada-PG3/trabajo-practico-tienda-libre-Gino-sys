@@ -29,4 +29,4 @@ class ProductoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Categoria)
-# Register your models here.
+# Register your models here.4
