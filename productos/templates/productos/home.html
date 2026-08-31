@@ -4,36 +4,78 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-center align-items-center"
-     style="min-height: 80vh; background: linear-gradient(135deg, #4facfe, #00f2fe);">
+<div class="container py-5">
 
-    <div class="bg-white p-5 rounded-4 shadow text-center"
-         style="max-width: 700px;">
+    <div class="text-center mb-5">
 
-        <h1 class="text-dark mb-4">
-            🚀 Bienvenido a la Tienda Django
+        <h1 class="mb-3">
+            🚀 Bienvenido, {{ nombre|title }}
         </h1>
 
-        <p class="text-secondary fs-5 mb-4">
-            El servidor se encuentra funcionando correctamente.
+        <p class="text-secondary fs-5">
+            Fecha: {{ fecha|date:"d/m/Y" }}
         </p>
 
-        <div class="bg-primary text-white p-4 rounded-3 fs-5">
-            Escribí
-            <code class="bg-light text-danger px-2 py-1 rounded">/admin</code>
-            en la barra de direcciones para acceder a la
-            <strong>gestión de la tienda</strong>.
+        <p>
+            Tenemos
+            <strong>{{ productos_destacados|length }}</strong>
+            productos destacados.
+        </p>
 
-            <br><br>
+    </div>
 
-            Y
-            <code class="bg-light text-danger px-2 py-1 rounded">/acerca-de-mi</code>
-            para acceder a mi información personal.
+
+    <div class="row">
+
+        {% for producto in productos_destacados %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body text-center">
+
+                    <h3 class="card-title">
+                        {{ producto.nombre|title }}
+                    </h3>
+
+                    <p class="card-text">
+                        {{ producto.descripcion|truncatechars:50 }}
+                    </p>
+
+                    {% if producto.precio %}
+
+                        <p class="fw-bold">
+                            Precio:
+                            ${{ producto.precio|floatformat:2 }}
+                        </p>
+
+                    {% else %}
+
+                        <p class="fw-bold">
+                            Precio:
+                            {{ producto.precio|default:"Sin precio" }}
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
         </div>
 
-        <footer class="mt-4 text-secondary">
-            Proyecto desarrollado con Django 🐍
-        </footer>
+        {% empty %}
+
+        <div class="col-12">
+
+            <div class="alert alert-warning text-center">
+                No hay productos destacados.
+            </div>
+
+        </div>
+
+        {% endfor %}
 
     </div>
 
