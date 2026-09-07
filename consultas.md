@@ -53,7 +53,7 @@ Obtiene los productos cuyo precio sea alguno de los valores indicados.
 El lookup __in permite buscar objetos cuyo valor se encuentre dentro de una lista.
 
 9. Obtener un producto específico — get()
-Producto.objects.get(pk=24)
+Producto.objects.get(pk=24) 
 
 Obtiene un único producto utilizando su clave primaria.
 
