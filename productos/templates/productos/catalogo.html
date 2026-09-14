@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+Catálogo
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4 text-center">Catálogo de Productos</h1>
+
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <h3 class="card-title">{{ producto.nombre|title }}</h3>
+                    <p class="card-text text-muted">{{ producto.descripcion|truncatechars:80 }}</p>
+
+                    {% if producto.precio %}
+                        <p class="fw-bold fs-5 text-primary">
+                            Precio: ${{ producto.precio|floatformat:2 }}
+                        </p>
+                    {% else %}
+                        <p class="fw-bold text-secondary">
+                            Precio: Sin precio
+                        </p>
+                    {% endif %}
+
+                    <small class="text-muted d-block mt-2">
+                        Stock: {{ producto.stock }} unidades
+                    </small>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                No hay productos disponibles en el catálogo en este momento.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
