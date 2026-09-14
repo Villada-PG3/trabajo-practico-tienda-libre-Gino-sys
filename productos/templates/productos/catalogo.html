@@ -12,23 +12,37 @@ Catálogo
         {% for producto in productos %}
         <div class="col-md-4 mb-4">
             <div class="card shadow h-100">
-                <div class="card-body text-center">
-                    <h3 class="card-title">{{ producto.nombre|title }}</h3>
-                    <p class="card-text text-muted">{{ producto.descripcion|truncatechars:80 }}</p>
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <!-- Enlace dinámico en el título -->
+                        <h3 class="card-title">
+                            <a href="{% url 'detalle_producto' producto.pk %}" class="text-decoration-none text-dark">
+                                {{ producto.nombre|title }}
+                            </a>
+                        </h3>
+                        <p class="card-text text-muted">{{ producto.descripcion|truncatechars:80 }}</p>
+                    </div>
 
-                    {% if producto.precio %}
-                        <p class="fw-bold fs-5 text-primary">
-                            Precio: ${{ producto.precio|floatformat:2 }}
-                        </p>
-                    {% else %}
-                        <p class="fw-bold text-secondary">
-                            Precio: Sin precio
-                        </p>
-                    {% endif %}
+                    <div class="mt-3">
+                        {% if producto.precio %}
+                            <p class="fw-bold fs-5 text-primary mb-1">
+                                Precio: ${{ producto.precio|floatformat:2 }}
+                            </p>
+                        {% else %}
+                            <p class="fw-bold text-secondary mb-1">
+                                Precio: Sin precio
+                            </p>
+                        {% endif %}
 
-                    <small class="text-muted d-block mt-2">
-                        Stock: {{ producto.stock }} unidades
-                    </small>
+                        <small class="text-muted d-block mb-3">
+                            Stock: {{ producto.stock }} unidades
+                        </small>
+
+                        <!-- Botón Ver Detalle -->
+                        <a href="{% url 'detalle_producto' producto.pk %}" class="btn btn-outline-primary btn-sm w-100">
+                            Ver detalle
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
