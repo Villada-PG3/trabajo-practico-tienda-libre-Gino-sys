@@ -6,7 +6,6 @@
 
 {% block content %}
 <div class="container py-5">
-    <!-- Tarea para casa: Botón Volver al catálogo -->
     <a href="{% url 'catalogo' %}" class="btn btn-outline-secondary mb-4">
         ← Volver al catálogo
     </a>
@@ -14,6 +13,16 @@
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <div class="card shadow-sm p-4">
+                
+                <!-- Imagen del producto -->
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="img-fluid rounded mb-4 w-100" style="max-height: 400px; object-fit: cover;" alt="{{ producto.nombre }}">
+                {% else %}
+                    <div class="bg-light text-center py-5 text-muted mb-4 rounded">
+                        Sin imagen disponible
+                    </div>
+                {% endif %}
+
                 <h1 class="card-title text-primary mb-3">{{ producto.nombre|title }}</h1>
                 
                 {% if producto.categoria %}

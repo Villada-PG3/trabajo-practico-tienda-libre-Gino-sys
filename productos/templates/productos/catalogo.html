@@ -12,9 +12,17 @@ Catálogo
         {% for producto in productos %}
         <div class="col-md-4 mb-4">
             <div class="card shadow h-100">
+                <!-- Imagen del producto -->
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% else %}
+                    <div class="bg-light text-center py-5 text-muted">
+                        Sin imagen disponible
+                    </div>
+                {% endif %}
+
                 <div class="card-body text-center d-flex flex-column justify-content-between">
                     <div>
-                        <!-- Enlace dinámico en el título -->
                         <h3 class="card-title">
                             <a href="{% url 'detalle_producto' producto.pk %}" class="text-decoration-none text-dark">
                                 {{ producto.nombre|title }}
@@ -38,7 +46,6 @@ Catálogo
                             Stock: {{ producto.stock }} unidades
                         </small>
 
-                        <!-- Botón Ver Detalle -->
                         <a href="{% url 'detalle_producto' producto.pk %}" class="btn btn-outline-primary btn-sm w-100">
                             Ver detalle
                         </a>
