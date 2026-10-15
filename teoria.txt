@@ -1,0 +1,14 @@
+1. Explicación de la Tarea (Teoría)
+La tarea nos pide diferenciar dos formas que tiene ListView para consultar la base de datos:
+
+Propiedad queryset (Estática):
+
+Es un atributo de la clase (por ejemplo, queryset = Producto.objects.filter(activo=True)).
+
+Se usa cuando los filtros son fijos y simples, es decir, que no cambian sin importar qué usuario entra ni qué parámetros se pasen en la URL.
+
+Método get_queryset() (Dinámico):
+
+Es un método que podemos sobrescribir en la clase y que se ejecuta en cada petición HTTP.
+
+Se utiliza cuando la consulta necesita ser dinámica. Por ejemplo: filtrar productos según lo que el usuario escribió en un buscador, o mostrar solo los productos pertenecientes al usuario que inició sesión (self.request.user).
