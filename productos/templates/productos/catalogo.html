@@ -13,6 +13,53 @@ Catálogo
     </h1>
 
 
+    <!-- BUSCADOR -->
+
+    <form method="GET" action="{% url 'catalogo' %}" class="mb-4">
+
+        <div class="input-group">
+
+            <input
+                type="text"
+                name="q"
+                class="form-control"
+                placeholder="Buscar productos..."
+                value="{{ busqueda }}"
+            >
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Buscar
+            </button>
+
+        </div>
+
+    </form>
+
+
+    {% if busqueda %}
+
+        <div class="mb-4">
+
+            <p>
+                Resultados para:
+                <strong>{{ busqueda }}</strong>
+            </p>
+
+            <a
+                href="{% url 'catalogo' %}"
+                class="btn btn-outline-secondary btn-sm"
+            >
+                Limpiar búsqueda
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
     <div class="row">
 
         {% for producto in productos %}
@@ -20,8 +67,6 @@ Catálogo
         <div class="col-md-4 mb-4">
 
             <div class="card shadow h-100">
-
-                <!-- Imagen del producto -->
 
                 {% if producto.imagen %}
 
@@ -54,6 +99,18 @@ Catálogo
                             </a>
 
                         </h3>
+
+
+                        {% if producto.categoria %}
+
+                            <a
+                                href="{% url 'categoria' producto.categoria.slug %}"
+                                class="badge bg-info text-dark text-decoration-none mb-2"
+                            >
+                                {{ producto.categoria.nombre }}
+                            </a>
+
+                        {% endif %}
 
 
                         <p class="card-text text-muted">
@@ -106,7 +163,7 @@ Catálogo
         <div class="col-12">
 
             <div class="alert alert-info text-center">
-                No hay productos disponibles en el catálogo en este momento.
+                No se encontraron productos.
             </div>
 
         </div>
@@ -115,6 +172,8 @@ Catálogo
 
     </div>
 
+
+    <!-- PAGINACIÓN -->
 
     {% if is_paginated %}
 
@@ -129,7 +188,7 @@ Catálogo
 
                 <a
                     class="page-link"
-                    href="?page={{ page_obj.previous_page_number }}"
+                    href="?page={{ page_obj.previous_page_number }}{% if busqueda %}&q={{ busqueda }}{% endif %}"
                 >
                     Anterior
                 </a>
@@ -157,7 +216,7 @@ Catálogo
 
                     <a
                         class="page-link"
-                        href="?page={{ num }}"
+                        href="?page={{ num }}{% if busqueda %}&q={{ busqueda }}{% endif %}"
                     >
                         {{ num }}
                     </a>
@@ -175,7 +234,7 @@ Catálogo
 
                 <a
                     class="page-link"
-                    href="?page={{ page_obj.next_page_number }}"
+                    href="?page={{ page_obj.next_page_number }}{% if busqueda %}&q={{ busqueda }}{% endif %}"
                 >
                     Siguiente
                 </a>

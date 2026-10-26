@@ -23,12 +23,50 @@
                     </a>
                 </li>
 
-                <!-- NUEVO -->
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'catalogo' %}">
                         Catálogo
                     </a>
                 </li>
+
+
+                <!-- DROPDOWN DINÁMICO DE CATEGORÍAS -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Categorías
+                    </a>
+
+                    <ul class="dropdown-menu">
+
+                        {% for categoria in categorias %}
+
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{% url 'categoria' categoria.slug %}">
+                                    {{ categoria.nombre }}
+                                </a>
+                            </li>
+
+                        {% empty %}
+
+                            <li>
+                                <span class="dropdown-item-text text-muted">
+                                    No hay categorías
+                                </span>
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </li>
+
 
                 <li class="nav-item">
                     <a class="nav-link" href="/acerca-de-mi">
@@ -45,5 +83,6 @@
             </ul>
 
         </div>
+
     </div>
 </nav>
