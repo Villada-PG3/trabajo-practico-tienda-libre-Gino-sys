@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 
 from .models import Producto
+from .forms import ContactoForm
 
 
 class HomeView(TemplateView):
@@ -22,6 +23,37 @@ class HomeView(TemplateView):
 
 def acerca_de_mi(request):
     return render(request, 'productos/acerca_de_mi.html')
+
+
+def contacto(request):
+
+    mensaje_exito = None
+
+    if request.method == 'POST':
+        form = ContactoForm(request.POST)
+
+        if form.is_valid():
+            nombre = form.cleaned_data['nombre']
+            email = form.cleaned_data['email']
+            telefono = form.cleaned_data['telefono']
+            asunto = form.cleaned_data['asunto']
+            mensaje = form.cleaned_data['mensaje']
+
+            mensaje_exito = '¡Tu mensaje fue enviado correctamente!'
+
+            form = ContactoForm()
+
+    else:
+        form = ContactoForm()
+
+    return render(
+        request,
+        'productos/contacto.html',
+        {
+            'form': form,
+            'mensaje_exito': mensaje_exito
+        }
+    )
 
 
 class CatalogoView(ListView):
