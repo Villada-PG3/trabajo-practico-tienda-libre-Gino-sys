@@ -1,11 +1,11 @@
 from datetime import date
 
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, ListView, DetailView
 
+from .forms import ContactoForm, ProductoForm
 from .models import Producto
-from .forms import ContactoForm
 
 
 class HomeView(TemplateView):
@@ -52,6 +52,32 @@ def contacto(request):
         {
             'form': form,
             'mensaje_exito': mensaje_exito
+        }
+    )
+
+
+def producto_nuevo(request):
+
+    if request.method == 'POST':
+
+        form = ProductoForm(
+            request.POST,
+            request.FILES
+        )
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('catalogo')
+
+    else:
+        form = ProductoForm()
+
+    return render(
+        request,
+        'productos/producto_form.html',
+        {
+            'form': form
         }
     )
 

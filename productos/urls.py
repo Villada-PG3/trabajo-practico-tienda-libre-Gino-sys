@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 
@@ -25,6 +26,12 @@ urlpatterns = [
         'catalogo/',
         views.CatalogoView.as_view(),
         name='catalogo'
+    ),
+
+    path(
+        'producto/nuevo/',
+        views.producto_nuevo,
+        name='producto_nuevo'
     ),
 
     path(
