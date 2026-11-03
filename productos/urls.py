@@ -30,8 +30,14 @@ urlpatterns = [
 
     path(
         'producto/nuevo/',
-        views.producto_nuevo,
+        views.ProductoCreateView.as_view(),
         name='producto_nuevo'
+    ),
+
+    path(
+        'producto/<int:pk>/editar/',
+        views.ProductoUpdateView.as_view(),
+        name='producto_editar'
     ),
 
     path(

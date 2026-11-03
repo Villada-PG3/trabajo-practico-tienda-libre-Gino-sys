@@ -27,8 +27,6 @@ Catálogo
     </div>
 
 
-    <!-- BUSCADOR -->
-
     <form
         method="GET"
         action="{% url 'catalogo' %}"
@@ -62,9 +60,12 @@ Catálogo
         <div class="mb-4">
 
             <p>
+
                 Resultados para:
                 <strong>{{ busqueda }}</strong>
+
             </p>
+
 
             <a
                 href="{% url 'catalogo' %}"
@@ -100,7 +101,9 @@ Catálogo
                     {% else %}
 
                         <div class="bg-light text-center py-5 text-muted">
+
                             Sin imagen disponible
+
                         </div>
 
                     {% endif %}
@@ -110,6 +113,7 @@ Catálogo
 
 
                         <div>
+
 
                             <h3 class="card-title">
 
@@ -136,8 +140,11 @@ Catálogo
 
 
                             <p class="card-text text-muted">
+
                                 {{ producto.descripcion|truncatechars:80 }}
+
                             </p>
+
 
                         </div>
 
@@ -148,29 +155,47 @@ Catálogo
                             {% if producto.precio %}
 
                                 <p class="fw-bold fs-5 text-primary mb-1">
-                                    Precio: ${{ producto.precio|floatformat:2 }}
+
+                                    Precio:
+                                    ${{ producto.precio|floatformat:2 }}
+
                                 </p>
 
                             {% else %}
 
                                 <p class="fw-bold text-secondary mb-1">
+
                                     Precio: Sin precio
+
                                 </p>
 
                             {% endif %}
 
 
                             <small class="text-muted d-block mb-3">
-                                Stock: {{ producto.stock }} unidades
+
+                                Stock:
+                                {{ producto.stock }}
+                                unidades
+
                             </small>
 
 
                             <a
                                 href="{% url 'detalle_producto' producto.pk %}"
-                                class="btn btn-outline-primary btn-sm w-100"
+                                class="btn btn-outline-primary btn-sm w-100 mb-2"
                             >
                                 Ver detalle
                             </a>
+
+
+                            <a
+                                href="{% url 'producto_editar' producto.pk %}"
+                                class="btn btn-outline-warning btn-sm w-100"
+                            >
+                                Editar
+                            </a>
+
 
                         </div>
 
@@ -187,7 +212,9 @@ Catálogo
             <div class="col-12">
 
                 <div class="alert alert-info text-center">
+
                     No se encontraron productos.
+
                 </div>
 
             </div>
@@ -198,8 +225,6 @@ Catálogo
 
     </div>
 
-
-    <!-- PAGINACIÓN -->
 
     {% if is_paginated %}
 

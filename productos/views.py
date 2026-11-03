@@ -1,8 +1,14 @@
 from datetime import date
 
 from django.db.models import Q
-from django.shortcuts import redirect, render
-from django.views.generic import TemplateView, ListView, DetailView
+from django.shortcuts import render
+from django.views.generic import (
+    TemplateView,
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+)
 
 from .forms import ContactoForm, ProductoForm
 from .models import Producto
@@ -13,16 +19,22 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context['nombre'] = 'Gino'
         context['fecha'] = date.today()
+
         context['productos_destacados'] = Producto.objects.filter(
             activo=True
         ).order_by('-fecha_creacion')[:3]
+
         return context
 
 
 def acerca_de_mi(request):
-    return render(request, 'productos/acerca_de_mi.html')
+    return render(
+        request,
+        'productos/acerca_de_mi.html'
+    )
 
 
 def contacto(request):
@@ -30,9 +42,11 @@ def contacto(request):
     mensaje_exito = None
 
     if request.method == 'POST':
+
         form = ContactoForm(request.POST)
 
         if form.is_valid():
+
             nombre = form.cleaned_data['nombre']
             email = form.cleaned_data['email']
             telefono = form.cleaned_data['telefono']
@@ -44,6 +58,7 @@ def contacto(request):
             form = ContactoForm()
 
     else:
+
         form = ContactoForm()
 
     return render(
@@ -56,30 +71,16 @@ def contacto(request):
     )
 
 
-def producto_nuevo(request):
+class ProductoCreateView(CreateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = 'productos/producto_form.html'
 
-    if request.method == 'POST':
 
-        form = ProductoForm(
-            request.POST,
-            request.FILES
-        )
-
-        if form.is_valid():
-            form.save()
-
-            return redirect('catalogo')
-
-    else:
-        form = ProductoForm()
-
-    return render(
-        request,
-        'productos/producto_form.html',
-        {
-            'form': form
-        }
-    )
+class ProductoUpdateView(UpdateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = 'productos/producto_form.html'
 
 
 class CatalogoView(ListView):
@@ -89,11 +90,14 @@ class CatalogoView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        queryset = Producto.objects.filter(activo=True)
+        queryset = Producto.objects.filter(
+            activo=True
+        )
 
         busqueda = self.request.GET.get('q')
 
         if busqueda:
+
             queryset = queryset.filter(
                 Q(nombre__icontains=busqueda) |
                 Q(marca__icontains=busqueda) |
@@ -104,7 +108,12 @@ class CatalogoView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['busqueda'] = self.request.GET.get('q', '')
+
+        context['busqueda'] = self.request.GET.get(
+            'q',
+            ''
+        )
+
         return context
 
 
@@ -115,12 +124,14 @@ class CategoriaView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
+
         return Producto.objects.filter(
             activo=True,
             categoria__slug=self.kwargs['slug']
         )
 
     def get_context_data(self, **kwargs):
+
         context = super().get_context_data(**kwargs)
 
         if self.object_list:

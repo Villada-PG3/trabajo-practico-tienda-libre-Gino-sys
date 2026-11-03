@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}
+
+{% if object %}
+Editar producto
+{% else %}
 Agregar producto
+{% endif %}
+
 {% endblock %}
 
 
@@ -17,17 +23,32 @@ Agregar producto
 
                 <div class="card-body p-4">
 
-                    <h1 class="text-center mb-4">
-                        Agregar producto
-                    </h1>
+
+                    {% if object %}
+
+                        <h1 class="text-center mb-4">
+                            Editar producto
+                        </h1>
+
+                    {% else %}
+
+                        <h1 class="text-center mb-4">
+                            Agregar producto
+                        </h1>
+
+                    {% endif %}
 
 
-                    <form method="POST" enctype="multipart/form-data">
+                    <form
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
 
                         {% csrf_token %}
 
 
                         {% for field in form %}
+
 
                             {% if field.name == 'activo' %}
 
@@ -53,7 +74,9 @@ Agregar producto
 
                                 </div>
 
+
                             {% else %}
+
 
                                 <div class="mb-3">
 
@@ -87,7 +110,9 @@ Agregar producto
 
                                 </div>
 
+
                             {% endif %}
+
 
                         {% endfor %}
 
@@ -109,22 +134,51 @@ Agregar producto
 
                         <div class="d-grid gap-2">
 
-                            <button
-                                type="submit"
-                                class="btn btn-primary"
-                            >
-                                Guardar producto
-                            </button>
+
+                            {% if object %}
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                >
+                                    Guardar cambios
+                                </button>
+
+                            {% else %}
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-success"
+                                >
+                                    Crear producto
+                                </button>
+
+                            {% endif %}
 
 
-                            <a
-                                href="{% url 'catalogo' %}"
-                                class="btn btn-outline-secondary"
-                            >
-                                Cancelar
-                            </a>
+                            {% if object %}
+
+                                <a
+                                    href="{{ object.get_absolute_url }}"
+                                    class="btn btn-outline-secondary"
+                                >
+                                    Cancelar
+                                </a>
+
+                            {% else %}
+
+                                <a
+                                    href="{% url 'catalogo' %}"
+                                    class="btn btn-outline-secondary"
+                                >
+                                    Cancelar
+                                </a>
+
+                            {% endif %}
+
 
                         </div>
+
 
                     </form>
 
